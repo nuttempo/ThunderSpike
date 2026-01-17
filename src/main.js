@@ -20,12 +20,52 @@ function preload() {
     this.load.image('ball', 'https://labs.phaser.io/assets/sprites/shinyball.png');
     this.load.image('player', 'https://labs.phaser.io/assets/sprites/phaser-dude.png');
 }
+const CHARACTER_DATA = {
+    volt: {
+        name: 'Volt',
+        speed: 450,
+        jump: -550,
+        power: 1.5,
+        color: 0x00ffff, // สีฟ้านีออน
+        sprite: 'volt_assets'
+    },
+    nova: {
+        name: 'Nova',
+        speed: 250,
+        jump: -400,
+        power: 2.2,
+        color: 0xffa500, // สีส้มเพลิง
+        sprite: 'nova_assets'
+    },
+    static: {
+        name: 'Static',
+        color: 0x9c27b0, // สีม่วง
+        speed: 350,
+        power: 3.0,
+        jump: -450,
+        sprite: 'static_assets'
+    },
+    pulse: {
+        name: 'Pulse',
+        color: 0x39ff14, // สีเขียวนีออน
+        speed: 400,
+        power: 3.5,
+        jump: -480,
+        sprite: 'pulse_assets'
+    }// เพิ่มตัวอื่นๆ ตามตารางด้านบน...
+};
 
+// ฟังก์ชันเลือกตัวละครและตั้งค่า Physics
+function setupPlayer(playerSprite, charKey) {
+    const stats = CHARACTER_DATA[charKey];
+    playerSprite.setData('stats', stats);
+    playerSprite.setTint(stats.color); // เปลี่ยนสีเบื้องต้นตามตัวละคร
+}
 function create() {
     // สร้างผู้เล่น
     player = this.physics.add.sprite(100, 450, 'player');
     player.setCollideWorldBounds(true);
-    
+
     // สร้างลูกบอล
     ball = this.physics.add.sprite(400, 300, 'ball');
     ball.setBounce(1);
