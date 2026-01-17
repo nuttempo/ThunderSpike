@@ -75,6 +75,9 @@ function create() {
     // ระบบควบคุม
     cursors = this.input.keyboard.createCursorKeys();
 
+    // กำหนดค่าเริ่มต้นให้ผู้เล่น (ตัวอย่าง: เลือก Volt)
+    setupPlayer(player, 'volt');
+
     // ตรวจสอบการชนระหว่างคนกับบอล
     this.physics.add.collider(player, ball, () => {
         ball.setVelocityY(-400); // เมื่อโหม่งบอล บอลจะเด้งขึ้น
@@ -82,9 +85,19 @@ function create() {
 }
 
 function update() {
-    if (cursors.left.isDown) player.setVelocityX(-200);
-    else if (cursors.right.isDown) player.setVelocityX(200);
-    else player.setVelocityX(0);
+    const stats = player.getData('stats');
+    // ป้องกัน error กรณี stats ยังไม่ถูก set (เผื่อไว้)
+    if (!stats) return;
 
-    if (cursors.up.isDown && player.body.onFloor()) player.setVelocityY(-500);
+    if (cursors.left.isDown) {
+        player.setVelocityX(-stats.speed);
+    } else if (cursors.right.isDown) {
+        player.setVelocityX(stats.speed);
+    } else {
+        player.setVelocityX(0);
+    }
+
+    if (cursors.up.isDown && player.body.onFloor()) {
+        player.setVelocityY(stats.jump);
+    }
 }
