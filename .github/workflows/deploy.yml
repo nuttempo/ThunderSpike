@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ] # หรือเปลี่ยนเป็นชื่อ branch ที่คุณใช้ (เช่น master)
+    branches: [ main ]
 
 permissions:
   contents: read
@@ -28,5 +28,13 @@ jobs:
       - name: Build
         run: npm run build
 
+      # --- ขั้นตอนที่เพิ่มเข้ามาเพื่อแก้ Error ---
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Vite จะสร้างไฟล์ไว้ที่โฟลเดอร์ dist
+          path: './dist'
+
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
