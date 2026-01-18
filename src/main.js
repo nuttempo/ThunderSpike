@@ -2,8 +2,8 @@ import Phaser from 'phaser';
 
 const config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 1920,
+    height: 1080,
     parent: 'game-container',
     physics: {
         default: 'arcade',
@@ -63,11 +63,11 @@ function setupPlayer(playerSprite, charKey) {
 }
 function create() {
     // สร้างผู้เล่น
-    player = this.physics.add.sprite(100, 450, 'player');
+    player = this.physics.add.sprite(100, 900, 'player');
     player.setCollideWorldBounds(true);
 
     // สร้างลูกบอล
-    ball = this.physics.add.sprite(400, 300, 'ball');
+    ball = this.physics.add.sprite(960, 540, 'ball');
     ball.setBounce(1);
     ball.setCollideWorldBounds(true);
     ball.setCircle(15); // ปรับให้การชนเป็นวงกลม
